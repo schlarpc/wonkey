@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wonkey file upload</title>
+    <style>
+      body { font-family: sans-serif; }
+      label { display: block; padding: 1em; }
+    </style>
+  </head>
+  <body>
+    <form method="post" action="" enctype="multipart/form-data">
+      <label>
+        <input type="file" name="file">
+      </label>
+      <label>
+        <input type="text" name="secret" placeholder="Secret key">
+      </label>
+      <label>
+        <button type="submit">Upload file</button>
+      </label>
+    </form>
+  </body>
+</html>
