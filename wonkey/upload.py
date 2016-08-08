@@ -21,7 +21,8 @@ def handle_upload():
     else:
         upload = flask.request.stream
         upload.filename = 'file' + guess_extension(flask.request.headers['Content-type'])
-    secret = flask.request.form.get('secret', '')
+
+    secret = flask.request.form.get('secret', '') or flask.request.headers.get('X-Wonkey-Secret', '')
 
     if secret != config.upload_secret:
         flask.abort(403)
