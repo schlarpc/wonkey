@@ -1,4 +1,5 @@
 import base64
+import mimetypes
 import os
 import struct
 import uuid
@@ -9,8 +10,17 @@ import werkzeug
 from .bytesfernet import BytesFernet
 from .config import config
 
+mimetypes.add_type('application/json', '.json')
+
+def guess_extension(mime_type):
+    return mimetypes.guess_extension(mime_type, False) or '.bin'
+
 def handle_upload():
-    upload = flask.request.files['file']
+    if 'file' in flask.request.files:
+        upload = flask.request.files['file']
+    else:
+        upload = flask.request.stream
+        upload.filename = 'file' + guess_extension(flask.request.headers['Content-type'])
     secret = flask.request.form.get('secret', '')
 
     if secret != config.upload_secret:
